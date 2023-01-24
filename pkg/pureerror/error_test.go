@@ -231,3 +231,16 @@ func Test_pureError_Why(t *testing.T) {
 		t.Errorf("error = %v, want %v", err, want)
 	}
 }
+
+func Test_pureError_Whyf(t *testing.T) {
+	err := New(CodeExample, nil).Whyf("reason: %s %s %s", "a", "b", "c")
+	want := &pureError{
+		code:    CodeExample,
+		msg:     "reason: a b c",
+		wrapped: nil,
+	}
+
+	if !reflect.DeepEqual(err, want) {
+		t.Errorf("error = %v, want %v", err, want)
+	}
+}

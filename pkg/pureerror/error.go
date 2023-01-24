@@ -11,6 +11,7 @@ type PureError interface {
 	Is(error) bool
 	Unwrap() error
 	Why(string) PureError
+	Whyf(string, ...any) PureError
 }
 
 type pureError struct {
@@ -61,6 +62,10 @@ func (e *pureError) Why(s string) PureError {
 	}
 	e.msg = s
 	return e
+}
+
+func (e *pureError) Whyf(format string, a ...any) PureError {
+	return e.Why(fmt.Sprintf(format, a...))
 }
 
 func New(code string, err error) PureError {
